@@ -3,6 +3,7 @@ package com.workintech.zoo.controller;
 
 import com.workintech.zoo.entity.Kangaroo;
 import com.workintech.zoo.entity.Koala;
+import com.workintech.zoo.exceptions.ZooValidation;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +33,8 @@ public class KoalaController {
     @GetMapping("/{id}")
     public Koala get(@PathVariable long id) {
 
-        //TODO add id validation
-        //TODO add koala existence check
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, koalaMap);
 
         return koalaMap.get(id);
     }
@@ -41,8 +42,8 @@ public class KoalaController {
     @PostMapping
     public Koala post(@RequestBody Koala koala) {
 
-        //TODO validate id
-        //TODO validate if same id is free in koalaMap
+        ZooValidation.id(koala.getId());
+        ZooValidation.keyExists(koala.getId(), koalaMap);
         //TODO check koala fields
 
         koalaMap.put(koala.getId(), koala);
@@ -52,9 +53,9 @@ public class KoalaController {
     @PutMapping("/{id}")
     public Koala put(@PathVariable long id, @RequestBody Koala koala) {
 
-        //TODO check id existence
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, koalaMap);
         //TODO check koala fields
-
 
         koala.setId(id);
         koalaMap.put(id, koala);
@@ -64,8 +65,8 @@ public class KoalaController {
     @DeleteMapping("/{id}")
     public Koala delete(@PathVariable long id) {
 
-        //TODO validate id
-        //TODO check id existence
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, koalaMap);
 
         return koalaMap.remove(id);
     }
