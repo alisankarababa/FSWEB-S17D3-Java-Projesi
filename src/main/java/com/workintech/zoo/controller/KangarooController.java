@@ -2,7 +2,10 @@ package com.workintech.zoo.controller;
 
 
 import com.workintech.zoo.entity.Kangaroo;
+import com.workintech.zoo.exceptions.ZooException;
+import com.workintech.zoo.exceptions.ZooValidation;
 import jakarta.annotation.PostConstruct;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -31,18 +34,17 @@ public class KangarooController {
     @GetMapping("/{id}")
     public Kangaroo get(@PathVariable long id) {
 
-        //TODO add id validation
-        //TODO add kangaroo existence check
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, kangarooMap);
 
         return kangarooMap.get(id);
     }
 
-
     @PostMapping
     public Kangaroo post(@RequestBody Kangaroo kangaroo) {
 
-        //TODO validate id
-        //TODO validate if same id is free in kangarooMap
+        ZooValidation.id(kangaroo.getId());
+        ZooValidation.keyExists(kangaroo.getId(), kangarooMap);
         //TODO check kangaroo fields
 
         kangarooMap.put(kangaroo.getId(), kangaroo);
@@ -52,9 +54,10 @@ public class KangarooController {
     @PutMapping("/{id}")
     public Kangaroo put(@PathVariable long id, @RequestBody Kangaroo kangaroo) {
 
-        //TODO check id existence
-        //TODO check kangaroo fields
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, kangarooMap);
 
+        //TODO check kangaroo fields
 
         kangaroo.setId(id);
         kangarooMap.put(id, kangaroo);
@@ -64,8 +67,8 @@ public class KangarooController {
     @DeleteMapping("/{id}")
     public Kangaroo delete(@PathVariable long id) {
 
-        //TODO validate id
-        //TODO check id existence
+        ZooValidation.id(id);
+        ZooValidation.keyDoesNotExist(id, kangarooMap);
 
         return kangarooMap.remove(id);
     }
