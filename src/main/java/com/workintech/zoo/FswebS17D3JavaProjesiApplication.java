@@ -1,4 +1,4 @@
-package com.workintech.zoo.FSWEBS17D3JavaProjesi;
+package com.workintech.zoo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

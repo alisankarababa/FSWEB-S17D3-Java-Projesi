@@ -1,4 +1,4 @@
-package com.workintech.zoo.FSWEBS17D3JavaProjesi;
+package com.workintech.zoo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
